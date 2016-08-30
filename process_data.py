@@ -92,7 +92,7 @@ f.close()
 image = np.zeros((HEIGHT + 1, LENGTH + 1, 3), dtype=np.uint8)
 image += 255
 
-for k, v in point_buckets.iteritems():
+for k, v in point_buckets.items():
   image[k[0], k[1], :] = list_to_color(v)
 
 plt.imshow(image)

@@ -1,7 +1,7 @@
-import cookielib
+import http.cookiejar
 import time
-import urllib
-import urllib2
+import urllib.request, urllib.parse, urllib.error
+import urllib.request, urllib.error, urllib.parse
 import re
 
 from BeautifulSoup import BeautifulSoup
@@ -13,11 +13,11 @@ TIME_BT_REQUESTS = 2
 
 def fetch_url(url):
   try:
-    print 'fetching %s' % url
+    print('fetching %s' % url)
     response = opener.open(url)
     time.sleep(TIME_BT_REQUESTS)
-  except Exception, e:
-    print '%s - %s' % (e, url)
+  except Exception as e:
+    print('%s - %s' % (e, url))
     time.sleep(TIME_BT_REQUESTS)
     return None
 
@@ -31,9 +31,9 @@ def fetch_url(url):
 
 # authentication code by: https://github.com/loisaidasam/stravalib
 def log_in():
-  print "Logging in..."
-  cj = cookielib.CookieJar()
-  opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+  print("Logging in...")
+  cj = http.cookiejar.CookieJar()
+  opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
 
   f = opener.open('https://www.strava.com/login')
   soup = BeautifulSoup(f.read())
@@ -50,7 +50,7 @@ def log_in():
     'password': '<< your password here >>',
   }
 
-  data = urllib.urlencode(values)
+  data = urllib.parse.urlencode(values)
   url = 'https://www.strava.com/session'
   response = opener.open(url, data)
   soup = BeautifulSoup(response.read())
